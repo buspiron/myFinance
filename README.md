@@ -94,4 +94,4 @@ License
 Distributed under the MIT License. See LICENSE for more information.
 Contact
 
-Project Link: https://github.com/your-username/myfinance
+Project Link: https://github.com/buspiron/myFinance
