@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transaction Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>Transaction Details</h2>
+
+<p>ID: <span th:text="${transaction.id}"></span></p>
+<p>User: <span th:text="${transaction.user.username}"></span></p>
+<p>Category: <span th:text="${transaction.category.name}"></span></p>
+<p>Amount: <span th:text="${transaction.amount}"></span></p>
+<p>Date: <span th:text="${transaction.date}"></span></p>
+<p>Description: <span th:text="${transaction.description}"></span></p>
+
+<a href="/transactions">Back to Transactions List</a>
+</div>
+</body>
+</html>

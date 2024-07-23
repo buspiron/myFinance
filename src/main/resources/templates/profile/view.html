@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile View</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h1>Your Profile</h1>
+
+
+<div th:if="${errorMessage}">
+    <p style="color:red;" th:text="${errorMessage}"></p>
+</div>
+
+<div th:unless="${errorMessage}">
+    <p>First Name: <span th:text="${userProfile.firstName}">John</span></p>
+    <p>Last Name: <span th:text="${userProfile.lastName}">Doe</span></p>
+    <p>Address: <span th:text="${userProfile.address}">123 Main St</span></p>
+    <p>Phone Number: <span th:text="${userProfile.phoneNumber}">123-456-7890</span></p>
+    <a href="/profile/edit" class="button-link">Edit Profile</a>
+    <a href="/welcome" class="button-link">Back to Welcome</a>
+</div>
+</div>
+</body>
+</html>

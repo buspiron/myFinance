@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Reports List</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>User Reports List</h2>
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+
+<a href="/user-reports/add">Add New User Report</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Report</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="userReport : ${userReports}">
+        <td th:text="${userReport.user.username}"></td>
+        <td th:text="${userReport.report.name}"></td>
+        <td>
+            <a th:href="@{/user-reports/edit/{userId}/{reportId}(userId=${userReport.user.id}, reportId=${userReport.report.id})}">Edit</a>
+            <a th:href="@{/user-reports/delete/{userId}/{reportId}(userId=${userReport.user.id}, reportId=${userReport.report.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/welcome">Back to Welcome</a>
+</div>
+</body>
+</html>

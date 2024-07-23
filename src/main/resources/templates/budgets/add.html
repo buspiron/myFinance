@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Budget</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>Add Budget</h2>
+
+<form th:action="@{/budgets/add}" th:object="${budget}" method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+    </div>
+    <div>
+        <label for="totalAmount">Total Amount:</label>
+        <input type="text" id="totalAmount" th:field="*{totalAmount}" />
+    </div>
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" th:field="*{startDate}" />
+    </div>
+    <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" th:field="*{endDate}" />
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+<a href="/budgets">Back to Budgets List</a>
+</div>
+</body>
+</html>

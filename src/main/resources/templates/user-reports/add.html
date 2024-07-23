@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add User Report</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>Add User Report</h2>
+
+<form th:action="@{/user-reports/add}" th:object="${userReport}" method="post">
+    <div>
+        <label for="user">User:</label>
+        <select id="user" name="user">
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="report">Report:</label>
+        <select id="report" name="report">
+            <option th:each="report : ${reports}" th:value="${report.id}" th:text="${report.name}"></option>
+        </select>
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+<a href="/user-reports">Back to User Reports List</a>
+</div>
+</body>
+</html>

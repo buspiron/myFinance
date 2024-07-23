@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="sidebar">
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <p><a th:href="@{/profile}">Go to Profile</a></p>
+    <p><a th:href="@{/reports}">View Reports</a></p>
+    <p><a th:href="@{/user-reports}">View User Reports</a></p>
+    <p><a th:href="@{/categories}">View Categories</a></p>
+    <p><a th:href="@{/budgets}">View Budgets</a></p>
+    <p><a th:href="@{/transactions}">View Transactions</a></p>
+    <form th:action="@{/logout}" method="post">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

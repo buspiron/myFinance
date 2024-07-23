@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        function redirectToLogin() {
+            setTimeout(function() {
+                window.location.href = "/login";
+            }, 3000);
+        }
+    </script>
+</head>
+<body>
+<h1>Register</h1>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<form th:action="@{/register}" method="post" th:object="${user}">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" th:field="*{username}" required />
+    </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required />
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required />
+    </div>
+
+    <div>
+        <button type="submit">Register</button>
+    </div>
+</form>
+
+<div th:if="${successMessage}">
+    <p th:text="${successMessage}"></p>
+    <script>
+        redirectToLogin();
+    </script>
+</div>
+
+<div th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</div>
+</div>
+</body>
+</html>

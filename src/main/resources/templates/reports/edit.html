@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Report</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h1>Edit Report</h1>
+
+<form th:action="@{/reports/edit/{id}(id=${report.id})}" th:object="${report}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required />
+    </div>
+
+    <div>
+        <label for="creationDate">Creation Date:</label>
+        <input type="date" id="creationDate" th:field="*{creationDate}" required />
+    </div>
+
+    <div>
+        <button type="submit">Update Report</button>
+    </div>
+</form>
+
+<a href="/reports">Back to Reports List</a>
+</div>
+</body>
+</html>

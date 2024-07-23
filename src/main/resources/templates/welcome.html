@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+
+    <div class="content">
+        <h2>Welcome!</h2>
+        <p>Logged in! Welcome <span th:text="${username}"></span>!</p>
+        <p>Your ID: <span th:text="${userId}"></span></p>
+
+        <div class="chart-wrapper">
+            <div th:each="data : ${chartData}" class="chart-container">
+                <div class="chart-description">
+                    <h3 th:text="${data.name}"></h3>
+                    <div class="chart-canvas-container">
+                        <canvas th:id="'chart-' + ${data.name.replaceAll(' ', '-')}"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <p>Used Amount: <span th:text="${data.usedAmount}"></span></p>
+                        <p>Total Amount: <span th:text="${data.totalAmount}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var chartData = /*[[${chartData}]]*/ [];
+        /*]]>*/
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Chart Data:', chartData);
+
+            try {
+                var parsedData = chartData;
+                console.log('Parsed Chart Data:', parsedData);
+
+                parsedData.forEach(function (data) {
+                    var labels = ['Used Amount', 'Remaining Amount'];
+                    var usedAmount = data.usedAmount;
+                    var remainingAmount = data.totalAmount - data.usedAmount;
+
+                    var chartData = {
+                        labels: labels,
+                        datasets: [{
+                            label: data.name,
+                            data: [usedAmount, remainingAmount],
+                            backgroundColor: ['#ff6384', '#36a2eb'],
+                            borderWidth: 1
+                        }]
+                    };
+
+                    var config = {
+                        type: 'doughnut',
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            var dataset = tooltipItem.dataset;
+                                            var total = dataset.data.reduce(function(a, b) { return a + b; }, 0);
+                                            var value = dataset.data[tooltipItem.dataIndex];
+                                            var percentage = ((value / total) * 100).toFixed(2);
+                                            return tooltipItem.label + ': ' + value + ' (' + percentage + '%)';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+
+                    var canvasId = 'chart-' + data.name.replaceAll(' ', '-');
+                    var canvas = document.getElementById(canvasId);
+
+                    console.log('Canvas Element for ID:', canvasId, canvas);
+
+                    if (canvas && canvas.getContext) {
+                        var ctx = canvas.getContext('2d');
+                        new Chart(ctx, config);
+                    } else {
+                        console.error('Canvas context not found for ID:', canvasId);
+                    }
+                });
+
+            } catch (e) {
+                console.error('Error parsing chartData:', e);
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Budget Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>Budget Details</h2>
+
+<p>ID: <span th:text="${budget.id}"></span></p>
+<p>Name: <span th:text="${budget.name}"></span></p>
+<p>Total Amount: <span th:text="${budget.totalAmount}"></span></p>
+<p>Start Date: <span th:text="${budget.startDate}"></span></p>
+<p>End Date: <span th:text="${budget.endDate}"></span></p>
+<p>Used Amount: <span th:text="${usedAmount}"></span></p>
+
+<h3>Budget Items</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Category</th>
+        <th>Allocated Amount</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${budget.budgetItems}">
+        <td th:text="${item.category.name}"></td>
+        <td th:text="${item.allocatedAmount}"></td>
+        <td>
+            <a th:href="@{/budget-items/edit/{id}(id=${item.id})}">Edit</a>
+        </td>
+        <td>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/budget-items/add/{budgetId}(budgetId=${budget.id})}">Add Budget Item</a>
+
+<a href="/budgets">Back to Budgets List</a>
+</div>
+</body>
+</html>

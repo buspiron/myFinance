@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Report Entry</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:fragment="sidebar" th:replace="fragments/menu :: sidebar"></div>
+<div class="container">
+    <h2>Edit Report Entry</h2>
+    <form th:action="@{/report-entries/edit/{id}(id=${reportEntry.id})}" th:object="${reportEntry}" method="post">
+        <input type="hidden" name="report.id" th:value="${reportEntry.report.id}" />
+        <div>
+            <label for="category">Category:</label>
+            <select id="category" name="category.id">
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}" th:selected="${cat.id == reportEntry.category.id}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" step="0.01" th:value="${reportEntry.amount}" />
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" th:value="${reportEntry.description}" />
+        </div>
+        <button type="submit">Save</button>
+    </form>
+    <a href="/report-entries?reportId=${reportEntry.report.id}" class="button">Back to List</a>
+</div>
+</body>
+</html>

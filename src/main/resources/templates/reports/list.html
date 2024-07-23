@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reports List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+    <h2>Reports</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Creation Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="report : ${reports}">
+            <td th:text="${report.name}"></td>
+            <td th:text="${report.creationDate}"></td>
+            <td>
+                <a th:href="@{/reports/details/{id}(id=${report.id})}" class="button">Details</a>
+                <a th:href="@{/report-entries/{id}(id=${report.id})}" class="button">View Entries</a>
+                <a th:href="@{/reports/edit/{id}(id=${report.id})}" class="button">Edit</a>
+                <a th:href="@{/reports/delete/{id}(id=${report.id})}" class="button" th:onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/reports/add" class="button">Add New Report</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Budget Item</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>Edit Budget Item</h2>
+
+<form th:action="@{/budget-items/edit/{id}(id=${budgetItem.id})}" th:object="${budgetItem}" method="post">
+    <div>
+        <label for="category">Category:</label>
+        <select id="category" name="category.id" th:field="*{category.id}">
+            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="allocatedAmount">Allocated Amount:</label>
+        <input type="number" id="allocatedAmount" name="allocatedAmount" th:field="*{allocatedAmount}" step="0.01"/>
+    </div>
+    <div>
+        <input type="submit" value="Save"/>
+    </div>
+</form>
+
+<a href="/budgets/details/${budgetItem.budget.id}">Back to Budget Details</a>
+</div>
+</body>
+</html>

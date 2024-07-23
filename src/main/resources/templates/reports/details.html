@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Report Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h1>Report Details</h1>
+
+<p><strong>ID:</strong> <span th:text="${report.id}"></span></p>
+<p><strong>Name:</strong> <span th:text="${report.name}"></span></p>
+<p><strong>Creation Date:</strong> <span th:text="${#dates.format(report.creationDate, 'yyyy-MM-dd')}"></span></p>
+
+<a th:href="@{/reports/edit/{id}(id=${report.id})}">Edit</a>
+<form th:action="@{/reports/delete/{id}(id=${report.id})}" method="post" style="display:inline;">
+    <button type="submit">Delete</button>
+</form>
+<a href="/reports">Back to Reports List</a>
+</div>
+</body>
+</html>

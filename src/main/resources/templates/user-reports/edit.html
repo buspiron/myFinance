@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User Report</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>Edit User Report</h2>
+
+<form th:action="@{/user-reports/edit/{userId}/{reportId}(userId=${userReport.user.id}, reportId=${userReport.report.id})}" th:object="${userReport}" method="post">
+    <div>
+        <label for="user">User:</label>
+        <span id="user" th:text="${userReport.user.username}"></span>
+    </div>
+    <div>
+        <label for="report">Report:</label>
+        <select id="report" name="report" th:field="*{report.id}">
+            <option th:each="report : ${reports}"
+                    th:value="${report.id}"
+                    th:text="${report.name}"
+                    th:selected="${report.id == userReport.report.id}"></option>
+        </select>
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+<a href="/user-reports">Back to User Reports List</a>
+</div>
+</body>
+</html>

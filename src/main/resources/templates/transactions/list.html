@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transactions List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/menu :: sidebar"></div>
+<h2>Transactions List</h2>
+
+<a href="/transactions/add" class="button-link">Add New Transaction</a>
+<a href="/transactions/pdf" class="button-link">Download as PDF</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="transaction : ${transactions}">
+        <td th:text="${transaction.id}"></td>
+        <td th:text="${transaction.user.username}"></td>
+        <td th:text="${transaction.category.name}"></td>
+        <td th:text="${transaction.amount}"></td>
+        <td th:text="${transaction.date}"></td>
+        <td th:text="${transaction.description}"></td>
+        <td>
+            <a th:href="@{/transactions/edit/{id}(id=${transaction.id})}">Edit</a>
+            <a th:href="@{/transactions/delete/{id}(id=${transaction.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/transactions/details/{id}(id=${transaction.id})}">Details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/welcome">Back to Welcome</a>
+</div>
+</body>
+</html>
