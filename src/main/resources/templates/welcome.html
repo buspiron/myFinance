@@ -14,6 +14,11 @@
         <p>Logged in! Welcome <span th:text="${username}"></span>!</p>
         <p>Your ID: <span th:text="${userId}"></span></p>
 
+        <!-- Warning message -->
+        <div th:if="${anyBudgetExceeded}" class="warning">
+            <p style="color: red;">Warning: One or more budgets have been exceeded!</p>
+        </div>
+
         <div class="chart-wrapper">
             <div th:each="data : ${chartData}" class="chart-container">
                 <div class="chart-description">

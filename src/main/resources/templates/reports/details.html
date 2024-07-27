@@ -12,7 +12,7 @@
 
 <p><strong>ID:</strong> <span th:text="${report.id}"></span></p>
 <p><strong>Name:</strong> <span th:text="${report.name}"></span></p>
-<p><strong>Creation Date:</strong> <span th:text="${#dates.format(report.creationDate, 'yyyy-MM-dd')}"></span></p>
+<p><strong>Creation Date:</strong> <span th:text="${report.creationDate}"></span></p>
 
 <a th:href="@{/reports/edit/{id}(id=${report.id})}">Edit</a>
 <form th:action="@{/reports/delete/{id}(id=${report.id})}" method="post" style="display:inline;">

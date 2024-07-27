@@ -39,4 +39,8 @@ public class ReportEntry {
     @Column(length = 255)
     @Size(max = 255, message = "Description must be less than 255 characters")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 }

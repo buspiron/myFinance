@@ -79,7 +79,7 @@ public class ReportController {
         return "redirect:/reports";
     }
 
-    @GetMapping("/delete/{id}")
+    @RequestMapping("/delete/{id}")
     public String deleteReport(@PathVariable Integer id) {
         reportService.deleteById(id);
         return "redirect:/reports";
@@ -95,6 +95,6 @@ public class ReportController {
         model.addAttribute("report", report);
         model.addAttribute("userReports", userReports);
 
-        return "reports/report-details";
+        return "reports/details";
     }
 }

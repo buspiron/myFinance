@@ -50,9 +50,15 @@ public class WelcomeController {
                     })
                     .collect(Collectors.toList());
             model.addAttribute("chartData", chartData);
+
+            boolean anyBudgetExceeded = chartData.stream()
+                    .anyMatch(data -> data.getUsedAmount().compareTo(data.getTotalAmount()) > 0);
+
+            model.addAttribute("anyBudgetExceeded", anyBudgetExceeded);
         } else {
             model.addAttribute("username", "Unknown");
             model.addAttribute("userId", "N/A");
+            model.addAttribute("anyBudgetExceeded", false);
         }
         return "welcome";
     }

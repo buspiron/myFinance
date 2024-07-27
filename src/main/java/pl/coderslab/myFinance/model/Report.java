@@ -35,4 +35,6 @@ public class Report {
     @NotNull(message = "Creation date is mandatory")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate creationDate;
+
+
 }

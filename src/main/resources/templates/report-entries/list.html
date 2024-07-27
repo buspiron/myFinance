@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Report Entries</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <div class="container">
     <div th:replace="fragments/menu :: sidebar"></div>
-    <h2>Report Entries</h2>
+    <h1>Report Entries for Report ID: <span th:text="${reportId}"></span></h1>
+
+    <a th:href="@{/report-entries/add(reportId=${reportId})}" class="button-link">Add New Entry</a>
+    <a th:href="@{/report-entries/pdf(reportId=${reportId})}" class="button-link">Download PDF</a>
+
     <table>
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Category</th>
-            <th>Amount</th>
             <th>Description</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="entry : ${entries}">
-            <td th:text="${entry.id}"></td>
-            <td th:text="${entry.category.name}"></td>
-            <td th:text="${entry.amount}"></td>
             <td th:text="${entry.description}"></td>
+            <td th:text="${entry.amount}"></td>
+            <td th:text="${entry.category.name}"></td>
+            <td>
+                <a th:href="@{/report-entries/edit/{id}(id=${entry.id})}" class="button-link">Edit</a>
+                <form th:action="@{/report-entries/delete/{id}(id=${entry.id})}" method="get" style="display:inline;">
+                    <button type="submit" class="button-link">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
-    <a href="/reports" class="button">Back to Reports</a>
+
+    <a th:href="@{/reports/details/{id}(id=${reportId})}" class="button-link">Back to Report Details</a>
 </div>
 </body>
 </html>
