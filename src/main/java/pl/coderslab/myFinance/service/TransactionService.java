@@ -1,6 +1,7 @@
 package pl.coderslab.myFinance.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.coderslab.myFinance.model.Transaction;
 import pl.coderslab.myFinance.repository.TransactionRepository;
@@ -40,5 +41,14 @@ public class TransactionService {
 
     public List<Transaction> findAll() {
         return transactionRepository.findAll();
+    }
+
+    public List<Transaction> findTransactions(Integer userId, String category, String sortField, Sort.Direction sortDirection) {
+        Sort sort = Sort.by(sortDirection, sortField);
+        if (category != null && !category.isEmpty()) {
+            return transactionRepository.findByUserIdAndCategoryName(userId, category, sort);
+        } else {
+            return transactionRepository.findByUserId(userId, sort);
+        }
     }
 }

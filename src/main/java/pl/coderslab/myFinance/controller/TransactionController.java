@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,11 +35,22 @@ public class TransactionController {
     private UserService userService;
 
     @GetMapping
-    public String listTransactions(Model model, HttpSession session) {
+    public String listTransactions(
+            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "sortField", defaultValue = "date") String sortField,
+            @RequestParam(value = "sortDirection", defaultValue = "DESC") String sortDirection,
+            Model model,
+            HttpSession session) {
+
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId != null) {
-            List<Transaction> transactions = transactionService.findByUserId(userId);
+            Sort.Direction direction = Sort.Direction.fromString(sortDirection.toUpperCase());
+            List<Transaction> transactions = transactionService.findTransactions(userId, category, sortField, direction);
             model.addAttribute("transactions", transactions);
+            model.addAttribute("categories", categoryService.findByUserId(userId)); // For category filtering
+            model.addAttribute("selectedCategory", category);
+            model.addAttribute("sortField", sortField);
+            model.addAttribute("sortDirection", sortDirection);
         }
         return "transactions/list";
     }
@@ -60,7 +72,7 @@ public class TransactionController {
         }
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId != null) {
-            transaction.setUser(userService.getUserById((long)userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId)));
+            transaction.setUser(userService.getUserById((long) userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId)));
             transactionService.save(transaction);
         }
         return "redirect:/transactions";

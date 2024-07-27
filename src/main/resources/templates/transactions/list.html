@@ -7,41 +7,73 @@
 <body>
 <div class="container">
     <div th:replace="fragments/menu :: sidebar"></div>
-<h2>Transactions List</h2>
+    <h2>Transactions List</h2>
 
-<a href="/transactions/add" class="button-link">Add New Transaction</a>
-<a href="/transactions/pdf" class="button-link">Download as PDF</a>
+    <form method="get" th:action="@{/transactions}">
+        <div>
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="">All Categories</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.name}"
+                        th:text="${cat.name}"
+                        th:selected="${selectedCategory == cat.name}"></option>
+            </select>
+        </div>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>User</th>
-        <th>Category</th>
-        <th>Amount</th>
-        <th>Date</th>
-        <th>Description</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="transaction : ${transactions}">
-        <td th:text="${transaction.id}"></td>
-        <td th:text="${transaction.user.username}"></td>
-        <td th:text="${transaction.category.name}"></td>
-        <td th:text="${transaction.amount}"></td>
-        <td th:text="${transaction.date}"></td>
-        <td th:text="${transaction.description}"></td>
-        <td>
-            <a th:href="@{/transactions/edit/{id}(id=${transaction.id})}">Edit</a>
-            <a th:href="@{/transactions/delete/{id}(id=${transaction.id})}" onclick="return confirm('Are you sure?')">Delete</a>
-            <a th:href="@{/transactions/details/{id}(id=${transaction.id})}">Details</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <div>
+            <label for="sortField">Sort By:</label>
+            <select id="sortField" name="sortField">
+                <option value="date" th:selected="${sortField == 'date'}">Date</option>
+                <option value="amount" th:selected="${sortField == 'amount'}">Amount</option>
+                <option value="category" th:selected="${sortField == 'category'}">Category</option>
+            </select>
+        </div>
 
-<a href="/welcome">Back to Welcome</a>
+        <div>
+            <label for="sortDirection">Sort Direction:</label>
+            <select id="sortDirection" name="sortDirection">
+                <option value="ASC" th:selected="${sortDirection == 'ASC'}">Ascending</option>
+                <option value="DESC" th:selected="${sortDirection == 'DESC'}">Descending</option>
+            </select>
+        </div>
+
+        <button type="submit" class="button-link">Apply</button>
+    </form>
+
+    <a href="/transactions/add" class="button-link">Add New Transaction</a>
+    <a href="/transactions/pdf" class="button-link">Download as PDF</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction : ${transactions}">
+            <td th:text="${transaction.id}"></td>
+            <td th:text="${transaction.user.username}"></td>
+            <td th:text="${transaction.category.name}"></td>
+            <td th:text="${transaction.amount}"></td>
+            <td th:text="${transaction.date}"></td>
+            <td th:text="${transaction.description}"></td>
+            <td>
+                <a th:href="@{/transactions/edit/{id}(id=${transaction.id})}">Edit</a>
+                <a th:href="@{/transactions/delete/{id}(id=${transaction.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                <a th:href="@{/transactions/details/{id}(id=${transaction.id})}">Details</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/welcome" class="button-link">Back to Welcome</a>
 </div>
 </body>
 </html>
